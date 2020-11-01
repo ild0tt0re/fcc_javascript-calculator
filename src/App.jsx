@@ -15,16 +15,16 @@ function App() {
         </div>
         <div className="keyboard">
           <button id="clear">AC</button>
-          <button id="divide">/</button>
-          <button id="multiply">x</button>
+          <button id="divide" className="operator-key">/</button>
+          <button id="multiply" className="operator-key">x</button>
           <button id="seven">7</button>
           <button id="eight">8</button>
           <button id="nine">9</button>
-          <button id="subtract">-</button>
+          <button id="subtract" className="operator-key">-</button>
           <button id="four">4</button>
           <button id="five">5</button>
           <button id="six">6</button>
-          <button id="add">+</button>
+          <button id="add" className="operator-key">+</button>
           <button id="one">1</button>
           <button id="two">2</button>
           <button id="three">3</button>

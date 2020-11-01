@@ -25,9 +25,10 @@
   flex-direction: column;
   justify-content: center;
   min-height: 100px;
+  min-width: 250px;
   padding: 20px;
-  background-color: #2f545a;
   border: 1px solid #6f767a;
+  background: linear-gradient(45deg, black, transparent);
   text-align: right;
 }
 
@@ -57,12 +58,27 @@
 
   #clear {
     grid-column: span 2;
+    background: slategrey;
+    &:active {
+      background: #aac3dc;
+    }
   }
   #equals {
     grid-row: 4 / span 2;
     grid-column: 4;
+    background: #0a91a7;
+    &:active {
+      background: #5ccee0;
+    }
   }
   #zero {
     grid-column: span 2;
+  }
+}
+
+.operator-key {
+  background-color: #56595d !important;
+  &:active {
+    background: #9da8b7!important;
   }
 }
