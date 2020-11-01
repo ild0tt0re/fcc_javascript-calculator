@@ -20,7 +20,7 @@
   box-shadow: 0px 7px 15px 0px rgba(50, 50, 50, 0.5);
 }
 
-#display {
+.cscreen {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -30,6 +30,10 @@
   border: 1px solid #6f767a;
   background: linear-gradient(45deg, black, transparent);
   text-align: right;
+
+  .input {
+    font-size: 50px;
+  }
 }
 
 .keyboard {
