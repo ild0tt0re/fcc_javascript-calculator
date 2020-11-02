@@ -5,6 +5,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  background-image: url(../assets/bg-algebra.png);
+  background-size: 10px;
 }
 
 #calculator {
@@ -33,6 +35,10 @@
 
   .input {
     font-size: 50px;
+  }
+  .expression {
+    font-size: 16px;
+    margin-top: 10px;
   }
 }
 
@@ -83,6 +89,6 @@
 .operator-key {
   background-color: #56595d !important;
   &:active {
-    background: #9da8b7!important;
+    background: #9da8b7 !important;
   }
 }

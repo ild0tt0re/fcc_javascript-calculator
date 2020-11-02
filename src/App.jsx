@@ -1,7 +1,7 @@
 import { useState /*, useEffect*/ } from 'react';
 import './styles/App.scss';
 
-const initialInputState = 0;
+const initialInputState = '0';
 const initialExpressionState = '';
 
 function App() {
@@ -14,23 +14,69 @@ function App() {
   };
 
   const handleEqualsClick = (e) => {
-    const parsedExpression = expression.replace('x', '*');
-    const result = eval(parsedExpression);
+    const operators = ['+', '-', 'x', '/'];
+    const lastTwoCharsExpression = expression.slice(-2);
+    const isLastCharOperator = operators.includes(lastTwoCharsExpression.slice(-1));
+    let newExpression = '';
+
+    if (isLastCharOperator) {
+      let isPenultimateCharOperator = operators.includes(lastTwoCharsExpression.slice(0,1));
+      let operatorsToRemove = isPenultimateCharOperator ? 2 : 1;
+
+      newExpression = expression.slice(0, -operatorsToRemove);
+    } else {
+      newExpression = expression;
+    }
+
+    const normalizeExpression = newExpression.replace('x', '*');
+    /* eslint-disable no-eval */
+    const result = String(eval(normalizeExpression));
+
     setInput(result);
+    setExpression(result);
   };
 
   const handleOperatorClick = (e) => {
-    const currentInput = String(e.target.textContent);
+    const currentInput = getTextInputFromEvent(e);
+    const lastCharExpression = expression.slice(-1);
+    const noRepeatOperators = ['+', 'x', '/'];
 
     setInput(currentInput);
-    setExpression(expression + currentInput);
+    if (
+      (noRepeatOperators.includes(lastCharExpression) &&
+        currentInput !== '-') ||
+      lastCharExpression === '-'
+    ) {
+      if (
+        noRepeatOperators.includes(currentInput) &&
+        lastCharExpression === '-'
+      ) {
+        const charBeforeMinusOperator = expression.slice(-2).slice(0, 1);
+        noRepeatOperators.includes(charBeforeMinusOperator)
+          ? setExpression(expression.slice(0, -2) + currentInput)
+          : setExpression(expression + currentInput);
+      } else {
+        setExpression(expression.slice(0, -1) + currentInput);
+      }
+    } else {
+      setExpression(expression + currentInput);
+    }
+  };
+
+  const handleDecimalClick = (e) => {
+    const currentInput = getTextInputFromEvent(e);
+    if (!input.includes('.')) {
+      setInput(input + currentInput);
+      setExpression(expression + currentInput);
+    }
   };
 
   const handleNumberClick = (e) => {
-    let newInput = 0;
-    const currentInput = String(e.target.textContent);
+    let newInput = '0';
+    const currentInput = getTextInputFromEvent(e);
+    const lastCharExpression = expression.slice(-1);
 
-    const specialChars = [0, '+', '-', 'x', '/'];
+    const specialChars = ['0', '+', '-', 'x', '/'];
     if (!specialChars.includes(input)) {
       newInput = input + currentInput;
       setInput(newInput);
@@ -40,9 +86,15 @@ function App() {
     } else {
       newInput = currentInput;
       setInput(currentInput);
-      setExpression(expression + newInput);
+      if (lastCharExpression !== '0') {
+        setExpression(expression + newInput);
+      }
     }
   };
+
+  function getTextInputFromEvent(e) {
+    return String(e.target.textContent);
+  }
 
   return (
     <div className="App">
@@ -118,7 +170,9 @@ function App() {
           <button id="zero" onClick={handleNumberClick}>
             0
           </button>
-          <button id="decimal">.</button>
+          <button id="decimal" onClick={handleDecimalClick}>
+            .
+          </button>
         </div>
       </div>
     </div>
