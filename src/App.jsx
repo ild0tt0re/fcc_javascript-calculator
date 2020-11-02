@@ -15,6 +15,8 @@ function App() {
 
   const handleEqualsClick = (e) => {
     const operators = ['+', '-', 'x', '/'];
+    const illegalFirstCharOperators = ['x', '/'];
+
     const lastTwoCharsExpression = expression.slice(-2);
     const isLastCharOperator = operators.includes(lastTwoCharsExpression.slice(-1));
     let newExpression = '';
@@ -26,6 +28,10 @@ function App() {
       newExpression = expression.slice(0, -operatorsToRemove);
     } else {
       newExpression = expression;
+    }
+
+    if(illegalFirstCharOperators.includes(newExpression.slice(0,1))){
+      newExpression = newExpression.slice(1);
     }
 
     const normalizeExpression = newExpression.replace('x', '*');
